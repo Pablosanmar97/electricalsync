@@ -4,6 +4,7 @@ Objective:
 
 This project serves to analyse the synchronziation between electrically coupled neurons in an spike-by-spike comparison and timing delays.
 
+
 Structure:
 
 It comprises a Main script which handles:
