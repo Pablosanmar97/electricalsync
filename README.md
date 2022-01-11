@@ -11,5 +11,5 @@ It comprises a Main script which handles:
   2. spike detection
   3. spike relocation (one neuron should be aware of missing spieks in the other one)
   4. Several analyses
-  5. 
+
 It also includes an adittional Utilities script with custom functions (filters, ...)
