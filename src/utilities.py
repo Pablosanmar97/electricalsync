@@ -5,28 +5,23 @@ import scipy as scp
 
 
 #-------------------------------------FILTERS--------------------------------------#
-
-
-
-def highpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'high'):	
+def highpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'high'):
 	#Get filter coefficients to check frequency response
 	nyq = 0.5 * sampling_rate
 	normal_cutoff = cutoff_freq / nyq 
-	b, a = butter(order, normal_cutoff, btype = type, analog = False)
+	b, a = scp.signal.butter(order, normal_cutoff, btype = type, analog = False)
 
 	#Apply the filter
-	return filtfilt(b ,a ,data)
-
-
+	return scp.signal.filtfilt(b ,a ,data)
 
 def lowpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'low'):
 	#Get filter coefficients to check frequency response
 	nyq = 0.5 * sampling_rate
 	normal_cutoff = cutoff_freq / nyq 
-	b, a = butter(order, normal_cutoff, btype = type, analog = False)
+	b, a = scp.signal.butter(order, normal_cutoff, btype = type, analog = False)
 
 	#Apply the filter
-	return filtfilt(b ,a ,data)
+	return scp.signal.filtfilt(b ,a ,data)
 
 
 
