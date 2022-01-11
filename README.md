@@ -10,7 +10,7 @@ Structure:
 It comprises a Main script which handles:
   1. signal processing
   2. spike detection
-  3. spike relocation (one neuron should be aware of missing spieks in the other one)
+  3. spike relocation (one neuron should be aware of missing spikes in the other one)
   4. Several analyses
 
 It also includes an adittional Utilities script with custom functions (filters, ...)
