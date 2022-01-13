@@ -5,6 +5,7 @@ import scipy as scp
 
 
 #-------------------------------------FILTERS--------------------------------------#
+
 def highpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'high'):
 	#Get filter coefficients to check frequency response
 	nyq = 0.5 * sampling_rate
@@ -46,10 +47,7 @@ def downsample(data):
 
 #-------------------------------------ANALYSIS--------------------------------------#
 
-
-
-def relocate_spikes(discard, spike_gap, data_1_beg, data_1_end, data_1_max, data_1_mid, data_2_beg, data_2_end, data_2_max, data_2_mid):
-
+def relocate_spikes(spike_gap, data_1_beg, data_1_end, data_1_max, data_1_mid, data_2_beg, data_2_end, data_2_max, data_2_mid):
 	data_1 = data_1_beg
 	data_2 = data_2_beg
 	# TAKE THE LONGEST DATASET TO ITERATE AS MANY TIMES AS THE LENGTH OF IT
@@ -90,29 +88,11 @@ def relocate_spikes(discard, spike_gap, data_1_beg, data_1_end, data_1_max, data
 					data_2_end.insert(i, 0)
 					data_2_max.insert(i, 0)
 					data_2_mid.insert(i, 0)
-					if(discard):
-						data_1.pop(i)
-						data_1_end.pop(i)
-						data_1_max.pop(i)
-						data_1_mid.pop(i)
-						data_2.pop(i)
-						data_2_end.pop(i)
-						data_2_max.pop(i)
-						data_2_mid.pop(i)
 				elif(np.sign(diff) > 0):
 					data_1.insert(i, 0)
 					data_1_end.insert(i, 0)
 					data_1_max.insert(i, 0)
 					data_1_mid.insert(i, 0)
-					if(discard):
-						data_1.pop(i)
-						data_1_end.pop(i)
-						data_1_max.pop(i)
-						data_1_mid.pop(i)
-						data_2.pop(i)
-						data_2_end.pop(i)
-						data_2_max.pop(i)
-						data_2_mid.pop(i)
 		i += 1
 		length = len(min_dataset)
 
@@ -210,6 +190,8 @@ def detect_burst_number(spikes1, spikes2):
 
 		else:
 			burst_number_array.append(increment)
+
+
 	return burst_number_array
 
 
@@ -238,20 +220,19 @@ def detect_spike_number(bursts):
 
 #--------------------------------------PLOTS----------------------------------------#
 
-
-
 def raster_plot(spike_number, spikes_detect):
 	to_subtract = 0
 	raster_list = []
 	sub_array=[]
 	for i in range(len(spike_number)):
-		if spike_number[i] == 1:
-			if sub_array:
-				raster_list.append(sub_array)
-			sub_array = []
-			to_subtract = spikes_detect[i]
-			sub_array.append(spikes_detect[i] - to_subtract)
-		else:
-			sub_array.append(spikes_detect[i] - to_subtract)
+			if spike_number[i] == 1:
+				if sub_array:
+					raster_list.append(sub_array)
+				sub_array = []
+				to_subtract = spikes_detect[i]
+				sub_array.append(spikes_detect[i] - to_subtract)
+			else:
+				if spikes_detect[i] - to_subtract > 0:
+					sub_array.append(spikes_detect[i] - to_subtract)
 
 	return raster_list
