@@ -1,3 +1,4 @@
+from re import I
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -5,6 +6,7 @@ import scipy as scp
 
 
 #-------------------------------------FILTERS--------------------------------------#
+
 
 def highpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'high'):
 	#Get filter coefficients to check frequency response
@@ -15,6 +17,7 @@ def highpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'high')
 	#Apply the filter
 	return scp.signal.filtfilt(b ,a ,data)
 
+
 def lowpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'low'):
 	#Get filter coefficients to check frequency response
 	nyq = 0.5 * sampling_rate
@@ -23,7 +26,6 @@ def lowpass_filter(data, cutoff_freq, sampling_rate, order = 5 , type = 'low'):
 
 	#Apply the filter
 	return scp.signal.filtfilt(b ,a ,data)
-
 
 
 def threshold_filter(data, threshold, remove = 'above'):
@@ -42,6 +44,7 @@ def threshold_filter(data, threshold, remove = 'above'):
 
 def downsample(data):
 	print("2")
+
 	
 
 
@@ -60,7 +63,6 @@ def relocate_spikes(spike_gap, data_1_beg, data_1_end, data_1_max, data_1_mid, d
 	elif (len(data_2) == len(data_1)):
 		max_dataset = data_2
 		min_dataset = data_1
-		return;
 
 	# for i in range (len(max_dataset)-1):
 	# 	diff = data_1[i] - data_2[i]
@@ -88,13 +90,16 @@ def relocate_spikes(spike_gap, data_1_beg, data_1_end, data_1_max, data_1_mid, d
 					data_2_end.insert(i, 0)
 					data_2_max.insert(i, 0)
 					data_2_mid.insert(i, 0)
+					if(len(data_2) > length):
+						length = len(data_2)
 				elif(np.sign(diff) > 0):
 					data_1.insert(i, 0)
 					data_1_end.insert(i, 0)
 					data_1_max.insert(i, 0)
 					data_1_mid.insert(i, 0)
+					if(len(data_1) > length):
+						length = len(data_1)				
 		i += 1
-		length = len(min_dataset)
 
 	return data_1_beg, data_1_end, data_1_max, data_1_mid, data_2_beg, data_2_end, data_2_max, data_2_mid
 
@@ -134,8 +139,7 @@ def skip_iterations_loop(data, intraspike_milisecs, threshold):
 
 
 
-def detect_single(data_neuron, data_time, thresh_high, thresh_low):
-	low_sw = 0
+def detect_single(data_neuron, thresh_high):
 	high_sw = 0
 	spike_beg = []
 	spike_end = []
