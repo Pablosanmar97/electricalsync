@@ -1,11 +1,11 @@
 # electricalsync
 
-## Objective:
+Objective:
 
 This project serves to analyse the synchronization between electrically coupled neurons in an spike-by-spike comparison and timing delays.
 
 
-## Structure:
+Structure:
 
 It comprises a Main script which handles:
   1. signal processing
@@ -15,9 +15,8 @@ It comprises a Main script which handles:
 
 It also includes an adittional Utilities script with custom functions (filters, ...)
 
-## Installation:
-Download folder electricalsync
-Set propper environment
-Import custom scripts ---> in the electricalsync main directory:   pip install -e .
+# installation
 
+Download and in the main electricalsync folder run the following command: pip install -e .
 
+This initializes the utilities script so that the Main one can use it
